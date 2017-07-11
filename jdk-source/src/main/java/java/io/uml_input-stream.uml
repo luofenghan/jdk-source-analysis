@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>java.io.BufferedInputStream</OriginalElement>
+  <nodes>
+    <node x="442.6909722222222" y="81.0">java.io.FileSystem</node>
+    <node x="11.0" y="253.0">java.io.FilterInputStream</node>
+    <node x="0.0" y="334.0">java.io.BufferedInputStream</node>
+    <node x="328.6909722222222" y="81.0">java.io.File.PathStatus</node>
+    <node x="324.52430555555554" y="253.0">java.io.File.TempDirectory</node>
+    <node x="464.52430555555554" y="253.0">java.io.DeleteOnExitHook</node>
+    <node x="183.25" y="162.0">java.io.FileDescriptor</node>
+    <node x="157.20555555555558" y="81.0">java.io.Closeable</node>
+    <node x="178.25000000000003" y="253.0">java.io.FileInputStream</node>
+    <node x="143.70555555555558" y="0.0">java.lang.AutoCloseable</node>
+    <node x="380.42708333333326" y="162.0">java.io.File</node>
+    <node x="55.135416666666686" y="162.0">java.io.InputStream</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.io.FileDescriptor" target="java.io.Closeable">
+      <point x="28.5" y="-15.5" />
+      <point x="268.75" y="137.0" />
+      <point x="233.0388888888889" y="137.0" />
+      <point x="30.333333333333314" y="15.5" />
+    </edge>
+    <edge source="java.io.File" target="java.io.FileSystem">
+      <point x="17.666666666666686" y="-15.5" />
+      <point x="424.59375" y="137.0" />
+      <point x="489.6909722222222" y="137.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="java.io.File.TempDirectory" target="java.io.File">
+      <point x="40.0" y="-15.5" />
+      <point x="424.52430555555554" y="233.0" />
+      <point x="417.5270833333333" y="233.0" />
+      <point x="10.600000000000023" y="15.5" />
+    </edge>
+    <edge source="java.io.File" target="java.io.File.PathStatus">
+      <point x="-17.666666666666686" y="-15.5" />
+      <point x="389.26041666666663" y="137.0" />
+      <point x="352.1909722222222" y="137.0" />
+      <point x="-23.5" y="15.5" />
+    </edge>
+    <edge source="java.io.InputStream" target="java.io.Closeable">
+      <point x="0.0" y="-15.5" />
+      <point x="107.63541666666669" y="137.0" />
+      <point x="172.37222222222223" y="137.0" />
+      <point x="-30.333333333333343" y="15.5" />
+    </edge>
+    <edge source="java.io.FilterInputStream" target="java.io.InputStream">
+      <point x="33.25" y="-15.5" />
+      <point x="110.75" y="233.0" />
+      <point x="107.63541666666669" y="233.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="java.io.FileInputStream" target="java.io.File">
+      <point x="46.49999999999997" y="-15.5" />
+      <point x="286.75" y="213.0" />
+      <point x="385.7270833333333" y="213.0" />
+      <point x="-21.19999999999999" y="15.5" />
+    </edge>
+    <edge source="java.io.File.PathStatus" target="java.io.File">
+      <point x="23.5" y="15.5" />
+      <point x="399.1909722222222" y="137.0" />
+      <point x="406.92708333333326" y="137.0" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="java.io.FileInputStream" target="java.io.FileDescriptor">
+      <point x="-15.500000000000028" y="-15.5" />
+      <point x="224.75" y="233.0" />
+      <point x="211.75" y="233.0" />
+      <point x="-28.5" y="15.5" />
+    </edge>
+    <edge source="java.io.DeleteOnExitHook" target="java.io.File">
+      <point x="0.0" y="-15.5" />
+      <point x="534.5243055555555" y="223.0" />
+      <point x="428.1270833333333" y="223.0" />
+      <point x="21.19999999999999" y="15.5" />
+    </edge>
+    <edge source="java.io.Closeable" target="java.lang.AutoCloseable">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="java.io.FileInputStream" target="java.io.InputStream">
+      <point x="-46.50000000000003" y="-15.5" />
+      <point x="193.75" y="233.0" />
+      <point x="142.63541666666669" y="233.0" />
+      <point x="35.0" y="15.5" />
+    </edge>
+    <edge source="java.io.BufferedInputStream" target="java.io.FilterInputStream">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="302.5" y="182.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,6 +1,6 @@
 ## 精读源码
 ### java.lang.*
-
+- [ ] String
 ### java.io.*
 
 ### java.util.*

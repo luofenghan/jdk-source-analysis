@@ -34,11 +34,11 @@ import java.util.List;
  * open file, an open socket, or another source or sink of bytes.
  * The main practical use for a file descriptor is to create a
  * {@link FileInputStream} or {@link FileOutputStream} to contain it.
- *
+ * <p>
  * <p>Applications should not create their own file descriptors.
  *
- * @author  Pavani Diwanji
- * @since   JDK1.0
+ * @author Pavani Diwanji
+ * @since JDK1.0
  */
 public final class FileDescriptor {
 
@@ -66,23 +66,23 @@ public final class FileDescriptor {
     // Set up JavaIOFileDescriptorAccess in SharedSecrets
     static {
         sun.misc.SharedSecrets.setJavaIOFileDescriptorAccess(
-            new sun.misc.JavaIOFileDescriptorAccess() {
-                public void set(FileDescriptor obj, int fd) {
-                    obj.fd = fd;
-                }
+                new sun.misc.JavaIOFileDescriptorAccess() {
+                    public void set(FileDescriptor obj, int fd) {
+                        obj.fd = fd;
+                    }
 
-                public int get(FileDescriptor obj) {
-                    return obj.fd;
-                }
+                    public int get(FileDescriptor obj) {
+                        return obj.fd;
+                    }
 
-                public void setHandle(FileDescriptor obj, long handle) {
-                    obj.handle = handle;
-                }
+                    public void setHandle(FileDescriptor obj, long handle) {
+                        obj.handle = handle;
+                    }
 
-                public long getHandle(FileDescriptor obj) {
-                    return obj.handle;
+                    public long getHandle(FileDescriptor obj) {
+                        return obj.handle;
+                    }
                 }
-            }
         );
     }
 
@@ -91,7 +91,7 @@ public final class FileDescriptor {
      * descriptor is not used directly, but rather via the input stream
      * known as {@code System.in}.
      *
-     * @see     java.lang.System#in
+     * @see java.lang.System#in
      */
     public static final FileDescriptor in = standardStream(0);
 
@@ -99,7 +99,8 @@ public final class FileDescriptor {
      * A handle to the standard output stream. Usually, this file
      * descriptor is not used directly, but rather via the output stream
      * known as {@code System.out}.
-     * @see     java.lang.System#out
+     *
+     * @see java.lang.System#out
      */
     public static final FileDescriptor out = standardStream(1);
 
@@ -108,16 +109,16 @@ public final class FileDescriptor {
      * descriptor is not used directly, but rather via the output stream
      * known as {@code System.err}.
      *
-     * @see     java.lang.System#err
+     * @see java.lang.System#err
      */
     public static final FileDescriptor err = standardStream(2);
 
     /**
      * Tests if this file descriptor object is valid.
      *
-     * @return  {@code true} if the file descriptor object represents a
-     *          valid, open file, socket, or other active I/O connection;
-     *          {@code false} otherwise.
+     * @return {@code true} if the file descriptor object represents a
+     * valid, open file, socket, or other active I/O connection;
+     * {@code false} otherwise.
      */
     public boolean valid() {
         return ((handle != -1) || (fd != -1));
@@ -132,24 +133,23 @@ public final class FileDescriptor {
      * system, sync will not return until all in-memory modified copies
      * of buffers associated with this FileDesecriptor have been
      * written to the physical medium.
-     *
+     * <p>
      * sync is meant to be used by code that requires physical
      * storage (such as a file) to be in a known state  For
      * example, a class that provided a simple transaction facility
      * might use sync to ensure that all changes to a file caused
      * by a given transaction were recorded on a storage medium.
-     *
+     * <p>
      * sync only affects buffers downstream of this FileDescriptor.  If
      * any in-memory buffering is being done by the application (for
      * example, by a BufferedOutputStream object), those buffers must
      * be flushed into the FileDescriptor (for example, by invoking
      * OutputStream.flush) before that data will be affected by sync.
      *
-     * @exception SyncFailedException
-     *        Thrown when the buffers cannot be flushed,
-     *        or because the system cannot guarantee that all the
-     *        buffers have been synchronized with physical media.
-     * @since     JDK1.1
+     * @throws SyncFailedException Thrown when the buffers cannot be flushed,
+     *                             or because the system cannot guarantee that all the
+     *                             buffers have been synchronized with physical media.
+     * @since JDK1.1
      */
     public native void sync() throws SyncFailedException;
 
@@ -191,7 +191,7 @@ public final class FileDescriptor {
     /**
      * Cycle through all Closeables sharing this FD and call
      * close() on each one.
-     *
+     * <p>
      * The caller closeable gets to call close0().
      */
     @SuppressWarnings("try")
@@ -204,7 +204,7 @@ public final class FileDescriptor {
                     for (Closeable referent : otherParents) {
                         try {
                             referent.close();
-                        } catch(IOException x) {
+                        } catch (IOException x) {
                             if (ioe == null) {
                                 ioe = x;
                             } else {
@@ -213,7 +213,7 @@ public final class FileDescriptor {
                         }
                     }
                 }
-            } catch(IOException ex) {
+            } catch (IOException ex) {
                 /*
                  * If releaser close() throws IOException
                  * add other exceptions as suppressed.

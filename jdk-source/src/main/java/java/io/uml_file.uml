@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>java.io.File</OriginalElement>
+  <nodes>
+    <node x="10.75" y="81.0">java.io.FileSystem</node>
+    <node x="1.0" y="263.0">java.io.WinNTFileSystem</node>
+    <node x="294.0" y="263.0">java.io.DeleteOnExitHook</node>
+    <node x="222.45" y="81.0">java.io.File.PathStatus</node>
+    <node x="154.0" y="263.0">java.io.File.TempDirectory</node>
+    <node x="0.0" y="344.0">java.io.DefaultFileSystem</node>
+    <node x="266.45" y="0.0">java.lang.Comparable</node>
+    <node x="223.21666666666667" y="162.0">java.io.File</node>
+    <node x="134.325" y="0.0">java.io.Serializable</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.io.DefaultFileSystem" target="java.io.WinNTFileSystem">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="java.io.File" target="java.io.FileSystem">
+      <point x="-21.19999999999999" y="-15.5" />
+      <point x="228.51666666666668" y="142.0" />
+      <point x="81.25" y="142.0" />
+      <point x="23.5" y="15.5" />
+    </edge>
+    <edge source="java.io.File.TempDirectory" target="java.io.File">
+      <point x="40.0" y="-15.5" />
+      <point x="254.0" y="243.0" />
+      <point x="260.31666666666666" y="243.0" />
+      <point x="10.599999999999994" y="15.5" />
+    </edge>
+    <edge source="java.io.File" target="java.io.File.PathStatus">
+      <point x="2.8421709430404007E-14" y="-15.5" />
+      <point x="249.7166666666667" y="142.0" />
+      <point x="245.95" y="142.0" />
+      <point x="-23.5" y="15.5" />
+    </edge>
+    <edge source="java.io.File" target="java.io.Serializable">
+      <point x="-10.599999999999994" y="-15.5" />
+      <point x="239.11666666666667" y="132.0" />
+      <point x="160.43333333333334" y="132.0" />
+      <point x="160.43333333333334" y="56.0" />
+      <point x="159.325" y="56.0" />
+      <point x="-25.0" y="15.5" />
+    </edge>
+    <edge source="java.io.WinNTFileSystem" target="java.io.FileSystem">
+      <point x="-33.25" y="-15.5" />
+      <point x="-23.5" y="15.5" />
+    </edge>
+    <edge source="java.io.File.PathStatus" target="java.io.File">
+      <point x="23.5" y="15.5" />
+      <point x="292.95" y="132.0" />
+      <point x="260.3166666666667" y="132.0" />
+      <point x="10.600000000000058" y="-15.5" />
+    </edge>
+    <edge source="java.io.DeleteOnExitHook" target="java.io.File">
+      <point x="0.0" y="-15.5" />
+      <point x="364.0" y="243.0" />
+      <point x="270.9166666666667" y="243.0" />
+      <point x="21.200000000000017" y="15.5" />
+    </edge>
+    <edge source="java.io.File.PathStatus" target="java.io.Serializable">
+      <point x="-23.5" y="-15.5" />
+      <point x="245.95" y="56.0" />
+      <point x="209.325" y="56.0" />
+      <point x="25.0" y="15.5" />
+    </edge>
+    <edge source="java.io.File.PathStatus" target="java.lang.Comparable">
+      <point x="23.5" y="-15.5" />
+      <point x="-26.5" y="15.5" />
+    </edge>
+    <edge source="java.io.File" target="java.lang.Comparable">
+      <point x="21.200000000000024" y="-15.5" />
+      <point x="270.9166666666667" y="142.0" />
+      <point x="326.95" y="142.0" />
+      <point x="326.95" y="56.0" />
+      <point x="345.95" y="56.0" />
+      <point x="26.5" y="15.5" />
+    </edge>
+    <edge source="java.io.WinNTFileSystem" target="java.io.File">
+      <point x="33.25" y="-15.5" />
+      <point x="100.75" y="213.0" />
+      <point x="228.51666666666668" y="213.0" />
+      <point x="-21.19999999999999" y="15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="217.0" y="187.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

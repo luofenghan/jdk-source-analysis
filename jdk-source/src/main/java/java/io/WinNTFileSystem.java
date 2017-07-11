@@ -25,9 +25,10 @@
 
 package java.io;
 
+import sun.security.action.GetPropertyAction;
+
 import java.security.AccessController;
 import java.util.Locale;
-import sun.security.action.GetPropertyAction;
 
 /**
  * Unicode-aware FileSystem for Windows NT/2000.
@@ -37,15 +38,13 @@ import sun.security.action.GetPropertyAction;
  */
 class WinNTFileSystem extends FileSystem {
 
-    private final char slash;
-    private final char altSlash;
-    private final char semicolon;
+    private final char slash; /*\\*/
+    private final char altSlash;/*/*/
+    private final char semicolon;/*:*/
 
     public WinNTFileSystem() {
-        slash = AccessController.doPrivileged(
-            new GetPropertyAction("file.separator")).charAt(0);
-        semicolon = AccessController.doPrivileged(
-            new GetPropertyAction("path.separator")).charAt(0);
+        slash = AccessController.doPrivileged(new GetPropertyAction("file.separator")).charAt(0);
+        semicolon = AccessController.doPrivileged(new GetPropertyAction("path.separator")).charAt(0);
         altSlash = (this.slash == '\\') ? '/' : '\\';
     }
 
@@ -155,9 +154,7 @@ class WinNTFileSystem extends FileSystem {
                 sb.append(c);
             }
         }
-
-        String rv = sb.toString();
-        return rv;
+        return sb.toString();
     }
 
     /* A normal Win32 pathname contains no duplicate slashes, except possibly
@@ -177,8 +174,8 @@ class WinNTFileSystem extends FileSystem {
         while ((src < len) && isSlash(path.charAt(src))) src++;
         char c;
         if ((len - src >= 2)
-            && isLetter(c = path.charAt(src))
-            && path.charAt(src + 1) == ':') {
+                && isLetter(c = path.charAt(src))
+                && path.charAt(src + 1) == ':') {
             /* Remove leading slashes if followed by drive specifier.
                This hack is necessary to support file URLs containing drive
                specifiers (e.g., "file://c:/path").  As a side effect,
@@ -189,8 +186,8 @@ class WinNTFileSystem extends FileSystem {
         } else {
             src = 0;
             if ((len >= 2)
-                && isSlash(path.charAt(0))
-                && isSlash(path.charAt(1))) {
+                    && isSlash(path.charAt(0))
+                    && isSlash(path.charAt(1))) {
                 /* UNC pathname: Retain first slash; leave src pointed at
                    second slash so that further slashes will be collapsed
                    into the second slash.  The result will be a pathname
@@ -377,7 +374,7 @@ class WinNTFileSystem extends FileSystem {
     // same directory, and must not create results differing from the true
     // canonicalization algorithm in canonicalize_md.c. For this reason the
     // prefix cache is conservative and is not used for complex path names.
-    private ExpiringCache cache       = new ExpiringCache();
+    private ExpiringCache cache = new ExpiringCache();
     private ExpiringCache prefixCache = new ExpiringCache();
 
     @Override
@@ -385,20 +382,20 @@ class WinNTFileSystem extends FileSystem {
         // If path is a drive letter only then skip canonicalization
         int len = path.length();
         if ((len == 2) &&
-            (isLetter(path.charAt(0))) &&
-            (path.charAt(1) == ':')) {
+                (isLetter(path.charAt(0))) &&
+                (path.charAt(1) == ':')) {
             char c = path.charAt(0);
             if ((c >= 'A') && (c <= 'Z'))
                 return path;
-            return "" + ((char) (c-32)) + ':';
+            return "" + ((char) (c - 32)) + ':';
         } else if ((len == 3) &&
-                   (isLetter(path.charAt(0))) &&
-                   (path.charAt(1) == ':') &&
-                   (path.charAt(2) == '\\')) {
+                (isLetter(path.charAt(0))) &&
+                (path.charAt(1) == ':') &&
+                (path.charAt(2) == '\\')) {
             char c = path.charAt(0);
             if ((c >= 'A') && (c <= 'Z'))
                 return path;
-            return "" + ((char) (c-32)) + ':' + '\\';
+            return "" + ((char) (c - 32)) + ':' + '\\';
         }
         if (!useCanonCaches) {
             return canonicalize0(path);
@@ -446,8 +443,7 @@ class WinNTFileSystem extends FileSystem {
             throws IOException;
 
     private String canonicalizeWithPrefix(String canonicalPrefix,
-            String filename) throws IOException
-    {
+                                          String filename) throws IOException {
         return canonicalizeWithPrefix0(canonicalPrefix,
                 canonicalPrefix + File.separatorChar + filename);
     }
@@ -456,7 +452,7 @@ class WinNTFileSystem extends FileSystem {
     // (everything up to the last filename) is canonical; just gets
     // the canonical name of the last element of the path
     private native String canonicalizeWithPrefix0(String canonicalPrefix,
-            String pathWithCanonicalPrefix)
+                                                  String pathWithCanonicalPrefix)
             throws IOException;
 
     // Best-effort attempt to get parent of this path; used for
@@ -491,9 +487,9 @@ class WinNTFileSystem extends FileSystem {
                     return null;
                 }
                 if (idx == 0 ||
-                    idx >= last - 1 ||
-                    path.charAt(idx - 1) == sep ||
-                    path.charAt(idx - 1) == altSep) {
+                        idx >= last - 1 ||
+                        path.charAt(idx - 1) == sep ||
+                        path.charAt(idx - 1) == altSep) {
                     // Punt on pathnames containing adjacent slashes
                     // toward the end
                     return null;
@@ -531,7 +527,7 @@ class WinNTFileSystem extends FileSystem {
 
     @Override
     public native boolean setPermission(File f, int access, boolean enable,
-            boolean owneronly);
+                                        boolean owneronly);
 
     /* -- File operations -- */
 
@@ -587,7 +583,7 @@ class WinNTFileSystem extends FileSystem {
         int n = 0;
         for (int i = 0; i < 26; i++) {
             if (((ds >> i) & 1) != 0) {
-                if (!access((char)('A' + i) + ":" + slash))
+                if (!access((char) ('A' + i) + ":" + slash))
                     ds &= ~(1 << i);
                 else
                     n++;
@@ -598,7 +594,7 @@ class WinNTFileSystem extends FileSystem {
         char slash = this.slash;
         for (int i = 0; i < 26; i++) {
             if (((ds >> i) & 1) != 0)
-                fs[j++] = new File((char)('A' + i) + ":" + slash);
+                fs[j++] = new File((char) ('A' + i) + ":" + slash);
         }
         return fs;
     }

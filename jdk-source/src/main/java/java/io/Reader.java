@@ -32,20 +32,18 @@ package java.io;
  * subclasses, however, will override some of the methods defined here in order
  * to provide higher efficiency, additional functionality, or both.
  *
- *
+ * @author Mark Reinhold
  * @see BufferedReader
- * @see   LineNumberReader
+ * @see LineNumberReader
  * @see CharArrayReader
  * @see InputStreamReader
- * @see   FileReader
+ * @see FileReader
  * @see FilterReader
- * @see   PushbackReader
+ * @see PushbackReader
  * @see PipedReader
  * @see StringReader
  * @see Writer
- *
- * @author      Mark Reinhold
- * @since       JDK1.1
+ * @since JDK1.1
  */
 
 public abstract class Reader implements Readable, Closeable {
@@ -71,7 +69,7 @@ public abstract class Reader implements Readable, Closeable {
      * Creates a new character-stream reader whose critical sections will
      * synchronize on the given object.
      *
-     * @param lock  The Object to synchronize on.
+     * @param lock The Object to synchronize on.
      */
     protected Reader(Object lock) {
         if (lock == null) {
@@ -88,9 +86,9 @@ public abstract class Reader implements Readable, Closeable {
      *
      * @param target the buffer to read characters into
      * @return The number of characters added to the buffer, or
-     *         -1 if this source of characters is at its end
-     * @throws IOException if an I/O error occurs
-     * @throws NullPointerException if target is null
+     * -1 if this source of characters is at its end
+     * @throws IOException                      if an I/O error occurs
+     * @throws NullPointerException             if target is null
      * @throws java.nio.ReadOnlyBufferException if target is a read only buffer
      * @since 1.5
      */
@@ -106,15 +104,14 @@ public abstract class Reader implements Readable, Closeable {
     /**
      * Reads a single character.  This method will block until a character is
      * available, an I/O error occurs, or the end of the stream is reached.
-     *
+     * <p>
      * <p> Subclasses that intend to support efficient single-character input
      * should override this method.
      *
-     * @return     The character read, as an integer in the range 0 to 65535
-     *             (<tt>0x00-0xffff</tt>), or -1 if the end of the stream has
-     *             been reached
-     *
-     * @exception  IOException  If an I/O error occurs
+     * @return The character read, as an integer in the range 0 to 65535
+     * (<tt>0x00-0xffff</tt>), or -1 if the end of the stream has
+     * been reached
+     * @throws IOException If an I/O error occurs
      */
     public int read() throws IOException {
         char cb[] = new char[1];
@@ -128,13 +125,11 @@ public abstract class Reader implements Readable, Closeable {
      * Reads characters into an array.  This method will block until some input
      * is available, an I/O error occurs, or the end of the stream is reached.
      *
-     * @param       cbuf  Destination buffer
-     *
-     * @return      The number of characters read, or -1
-     *              if the end of the stream
-     *              has been reached
-     *
-     * @exception   IOException  If an I/O error occurs
+     * @param cbuf Destination buffer
+     * @return The number of characters read, or -1
+     * if the end of the stream
+     * has been reached
+     * @throws IOException If an I/O error occurs
      */
     public int read(char cbuf[]) throws IOException {
         return read(cbuf, 0, cbuf.length);
@@ -145,33 +140,33 @@ public abstract class Reader implements Readable, Closeable {
      * until some input is available, an I/O error occurs, or the end of the
      * stream is reached.
      *
-     * @param      cbuf  Destination buffer
-     * @param      off   Offset at which to start storing characters
-     * @param      len   Maximum number of characters to read
-     *
-     * @return     The number of characters read, or -1 if the end of the
-     *             stream has been reached
-     *
-     * @exception  IOException  If an I/O error occurs
+     * @param cbuf Destination buffer
+     * @param off  Offset at which to start storing characters
+     * @param len  Maximum number of characters to read
+     * @return The number of characters read, or -1 if the end of the
+     * stream has been reached
+     * @throws IOException If an I/O error occurs
      */
     abstract public int read(char cbuf[], int off, int len) throws IOException;
 
-    /** Maximum skip-buffer size */
+    /**
+     * Maximum skip-buffer size
+     */
     private static final int maxSkipBufferSize = 8192;
 
-    /** Skip buffer, null until allocated */
+    /**
+     * Skip buffer, null until allocated
+     */
     private char skipBuffer[] = null;
 
     /**
      * Skips characters.  This method will block until some characters are
      * available, an I/O error occurs, or the end of the stream is reached.
      *
-     * @param  n  The number of characters to skip
-     *
-     * @return    The number of characters actually skipped
-     *
-     * @exception  IllegalArgumentException  If <code>n</code> is negative.
-     * @exception  IOException  If an I/O error occurs
+     * @param n The number of characters to skip
+     * @return The number of characters actually skipped
+     * @throws IllegalArgumentException If <code>n</code> is negative.
+     * @throws IOException              If an I/O error occurs
      */
     public long skip(long n) throws IOException {
         if (n < 0L)
@@ -182,7 +177,7 @@ public abstract class Reader implements Readable, Closeable {
                 skipBuffer = new char[nn];
             long r = n;
             while (r > 0) {
-                int nc = read(skipBuffer, 0, (int)Math.min(r, nn));
+                int nc = read(skipBuffer, 0, (int) Math.min(r, nn));
                 if (nc == -1)
                     break;
                 r -= nc;
@@ -197,8 +192,7 @@ public abstract class Reader implements Readable, Closeable {
      * @return True if the next read() is guaranteed not to block for input,
      * false otherwise.  Note that returning false does not guarantee that the
      * next read will block.
-     *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
     public boolean ready() throws IOException {
         return false;
@@ -220,13 +214,12 @@ public abstract class Reader implements Readable, Closeable {
      * will attempt to reposition the stream to this point.  Not all
      * character-input streams support the mark() operation.
      *
-     * @param  readAheadLimit  Limit on the number of characters that may be
-     *                         read while still preserving the mark.  After
-     *                         reading this many characters, attempting to
-     *                         reset the stream may fail.
-     *
-     * @exception  IOException  If the stream does not support mark(),
-     *                          or if some other I/O error occurs
+     * @param readAheadLimit Limit on the number of characters that may be
+     *                       read while still preserving the mark.  After
+     *                       reading this many characters, attempting to
+     *                       reset the stream may fail.
+     * @throws IOException If the stream does not support mark(),
+     *                     or if some other I/O error occurs
      */
     public void mark(int readAheadLimit) throws IOException {
         throw new IOException("mark() not supported");
@@ -240,10 +233,10 @@ public abstract class Reader implements Readable, Closeable {
      * character-input streams support the reset() operation, and some support
      * reset() without supporting mark().
      *
-     * @exception  IOException  If the stream has not been marked,
-     *                          or if the mark has been invalidated,
-     *                          or if the stream does not support reset(),
-     *                          or if some other I/O error occurs
+     * @throws IOException If the stream has not been marked,
+     *                     or if the mark has been invalidated,
+     *                     or if the stream does not support reset(),
+     *                     or if some other I/O error occurs
      */
     public void reset() throws IOException {
         throw new IOException("reset() not supported");
@@ -255,8 +248,8 @@ public abstract class Reader implements Readable, Closeable {
      * mark(), reset(), or skip() invocations will throw an IOException.
      * Closing a previously closed stream has no effect.
      *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
-     abstract public void close() throws IOException;
+    abstract public void close() throws IOException;
 
 }
