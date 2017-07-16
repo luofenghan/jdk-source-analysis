@@ -1,10 +1,7 @@
 ## 精读源码
 ### java.lang.*
-- [ ] String
 ### java.io.*
-
 ### java.util.*
-
 ## 深刻理解
 ### java.lang.reflect
 ### javax.net.*
