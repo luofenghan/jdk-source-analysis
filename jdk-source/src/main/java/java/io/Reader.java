@@ -163,26 +163,26 @@ public abstract class Reader implements Readable, Closeable {
      * Skips characters.  This method will block until some characters are
      * available, an I/O error occurs, or the end of the stream is reached.
      *
-     * @param n The number of characters to skip
+     * @param skip The number of characters to skip
      * @return The number of characters actually skipped
      * @throws IllegalArgumentException If <code>n</code> is negative.
      * @throws IOException              If an I/O error occurs
      */
-    public long skip(long n) throws IOException {
-        if (n < 0L)
+    public long skip(long skip) throws IOException {
+        if (skip < 0L)
             throw new IllegalArgumentException("skip value is negative");
-        int nn = (int) Math.min(n, maxSkipBufferSize);
+        int nn = (int) Math.min(skip, maxSkipBufferSize);
         synchronized (lock) {
             if ((skipBuffer == null) || (skipBuffer.length < nn))
                 skipBuffer = new char[nn];
-            long r = n;
-            while (r > 0) {
-                int nc = read(skipBuffer, 0, (int) Math.min(r, nn));
+            long unskip = skip;
+            while (unskip > 0) {
+                int nc = read(skipBuffer, 0, (int) Math.min(unskip, nn));
                 if (nc == -1)
                     break;
-                r -= nc;
+                unskip -= nc;
             }
-            return n - r;
+            return skip - unskip;
         }
     }
 

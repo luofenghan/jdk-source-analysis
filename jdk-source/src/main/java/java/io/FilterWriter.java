@@ -34,8 +34,8 @@ package java.io;
  * should override some of these methods and may also
  * provide additional methods and fields.
  *
- * @author      Mark Reinhold
- * @since       JDK1.1
+ * @author Mark Reinhold
+ * @since JDK1.1
  */
 
 public abstract class FilterWriter extends Writer {
@@ -48,7 +48,7 @@ public abstract class FilterWriter extends Writer {
     /**
      * Create a new filtered writer.
      *
-     * @param out  a Writer object to provide the underlying stream.
+     * @param out a Writer object to provide the underlying stream.
      * @throws NullPointerException if <code>out</code> is <code>null</code>
      */
     protected FilterWriter(Writer out) {
@@ -59,7 +59,7 @@ public abstract class FilterWriter extends Writer {
     /**
      * Writes a single character.
      *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
     public void write(int c) throws IOException {
         out.write(c);
@@ -68,11 +68,10 @@ public abstract class FilterWriter extends Writer {
     /**
      * Writes a portion of an array of characters.
      *
-     * @param  cbuf  Buffer of characters to be written
-     * @param  off   Offset from which to start reading characters
-     * @param  len   Number of characters to be written
-     *
-     * @exception  IOException  If an I/O error occurs
+     * @param cbuf Buffer of characters to be written
+     * @param off  Offset from which to start reading characters
+     * @param len  Number of characters to be written
+     * @throws IOException If an I/O error occurs
      */
     public void write(char cbuf[], int off, int len) throws IOException {
         out.write(cbuf, off, len);
@@ -81,11 +80,10 @@ public abstract class FilterWriter extends Writer {
     /**
      * Writes a portion of a string.
      *
-     * @param  str  String to be written
-     * @param  off  Offset from which to start reading characters
-     * @param  len  Number of characters to be written
-     *
-     * @exception  IOException  If an I/O error occurs
+     * @param str String to be written
+     * @param off Offset from which to start reading characters
+     * @param len Number of characters to be written
+     * @throws IOException If an I/O error occurs
      */
     public void write(String str, int off, int len) throws IOException {
         out.write(str, off, len);
@@ -94,7 +92,7 @@ public abstract class FilterWriter extends Writer {
     /**
      * Flushes the stream.
      *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
     public void flush() throws IOException {
         out.flush();

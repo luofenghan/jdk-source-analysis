@@ -34,8 +34,8 @@ package java.io;
  * should override some of these methods and may also provide
  * additional methods and fields.
  *
- * @author      Mark Reinhold
- * @since       JDK1.1
+ * @author Mark Reinhold
+ * @since JDK1.1
  */
 
 public abstract class FilterReader extends Reader {
@@ -48,7 +48,7 @@ public abstract class FilterReader extends Reader {
     /**
      * Creates a new filtered reader.
      *
-     * @param in  a Reader object providing the underlying stream.
+     * @param in a Reader object providing the underlying stream.
      * @throws NullPointerException if <code>in</code> is <code>null</code>
      */
     protected FilterReader(Reader in) {
@@ -59,7 +59,7 @@ public abstract class FilterReader extends Reader {
     /**
      * Reads a single character.
      *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
     public int read() throws IOException {
         return in.read();
@@ -68,7 +68,7 @@ public abstract class FilterReader extends Reader {
     /**
      * Reads characters into a portion of an array.
      *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
     public int read(char cbuf[], int off, int len) throws IOException {
         return in.read(cbuf, off, len);
@@ -77,16 +77,16 @@ public abstract class FilterReader extends Reader {
     /**
      * Skips characters.
      *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
-    public long skip(long n) throws IOException {
-        return in.skip(n);
+    public long skip(long skip) throws IOException {
+        return in.skip(skip);
     }
 
     /**
      * Tells whether this stream is ready to be read.
      *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
     public boolean ready() throws IOException {
         return in.ready();
@@ -102,7 +102,7 @@ public abstract class FilterReader extends Reader {
     /**
      * Marks the present position in the stream.
      *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
     public void mark(int readAheadLimit) throws IOException {
         in.mark(readAheadLimit);
@@ -111,7 +111,7 @@ public abstract class FilterReader extends Reader {
     /**
      * Resets the stream.
      *
-     * @exception  IOException  If an I/O error occurs
+     * @throws IOException If an I/O error occurs
      */
     public void reset() throws IOException {
         in.reset();

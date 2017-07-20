@@ -24,4 +24,20 @@ public class BufferedInputStreamTest {
         in.close();
     }
 
+    @Test
+    public void breakTest() {
+        Label:
+// 此处不能有非循环代码，除非用代码块包括如下
+        for (int i = 0; i < 100; i++) {
+            for (int index = i; true; index++) {
+                if (index % 10 == 0) {
+                    System.out.println("once break Label:" + index);
+                    break Label; // 直接跳出label标志循环
+                }
+            }
+        }
+
+        System.out.println("sdfsdf");
+    }
+
 }

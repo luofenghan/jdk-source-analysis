@@ -50,7 +50,7 @@ public class ByteArrayInputStream extends InputStream {
      * stream;  element <code>buf[pos]</code> is
      * the next byte to be read.
      */
-    protected byte buf[];
+    protected byte[] buf;
 
     /**
      * The index of the next character to read from the input stream buffer.
