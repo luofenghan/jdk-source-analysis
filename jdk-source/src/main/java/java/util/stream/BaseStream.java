@@ -24,48 +24,44 @@
  */
 package java.util.stream;
 
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Spliterator;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.IntConsumer;
-import java.util.function.Predicate;
 
 /**
  * Base interface for streams, which are sequences of elements supporting
  * sequential and parallel aggregate operations.  The following example
  * illustrates an aggregate operation using the stream types {@link Stream}
  * and {@link IntStream}, computing the sum of the weights of the red widgets:
- *
+ * <p>
  * <pre>{@code
  *     int sum = widgets.stream()
  *                      .filter(w -> w.getColor() == RED)
  *                      .mapToInt(w -> w.getWeight())
  *                      .sum();
  * }</pre>
- *
+ * <p>
  * See the class documentation for {@link Stream} and the package documentation
  * for <a href="package-summary.html">java.util.stream</a> for additional
  * specification of streams, stream operations, stream pipelines, and
  * parallelism, which governs the behavior of all stream types.
+ * 第一类是 iterator() 和 spliterator()操作提供了遍历元素的方法。
+ * 第二类是 sequential()、parallel()、unordered()对流进行转化，返回一个指定的流。
+ * 第三类是 对关闭流方法的处理。
  *
- * @param <T> the type of the stream elements
- * @param <S> the type of of the stream implementing {@code BaseStream}
- * @since 1.8
+ * @param <T> 指定stream元素的类型
+ * @param <S> BaseStream的子类型
  * @see Stream
  * @see IntStream
  * @see LongStream
  * @see DoubleStream
  * @see <a href="package-summary.html">java.util.stream</a>
+ * @since 1.8
  */
-public interface BaseStream<T, S extends BaseStream<T, S>>
-        extends AutoCloseable {
+public interface BaseStream<T, S extends BaseStream<T, S>> extends AutoCloseable {
     /**
      * Returns an iterator for the elements of this stream.
-     *
+     * 定义了每个Stream都需要提供返回一个迭代子对象的方法。
+     * <p>
      * <p>This is a <a href="package-summary.html#StreamOps">terminal
      * operation</a>.
      *
@@ -75,7 +71,9 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
 
     /**
      * Returns a spliterator for the elements of this stream.
-     *
+     * 和iterator() 方法类似，但返回的对象是Spliterator而不是Iterator。Spliterator可以将元素分割成多份，分别交于不于的线程去遍历，以提高效率。
+     * <p>
+     * 使用Iterator的时候，我们可以顺序地遍历容器中的元素，使用Spliterator的时候，我们可以将元素分割成多份，分别交于不于的线程去遍历，以提高效率。
      * <p>This is a <a href="package-summary.html#StreamOps">terminal
      * operation</a>.
      *
@@ -87,6 +85,7 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * Returns whether this stream, if a terminal operation were to be executed,
      * would execute in parallel.  Calling this method after invoking an
      * terminal stream operation method may yield unpredictable results.
+     * 是否是并行流
      *
      * @return {@code true} if this stream would execute in parallel if executed
      */
@@ -96,7 +95,8 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * Returns an equivalent stream that is sequential.  May return
      * itself, either because the stream was already sequential, or because
      * the underlying stream state was modified to be sequential.
-     *
+     * 返回一个【串行流】，如果该流本身就是串行的，则返回他本身
+     * <p>
      * <p>This is an <a href="package-summary.html#StreamOps">intermediate
      * operation</a>.
      *
@@ -108,7 +108,8 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * Returns an equivalent stream that is parallel.  May return
      * itself, either because the stream was already parallel, or because
      * the underlying stream state was modified to be parallel.
-     *
+     * 返回一个【并行流】，如果该流本身就是并行的，则返回他本身。
+     * <p>
      * <p>This is an <a href="package-summary.html#StreamOps">intermediate
      * operation</a>.
      *
@@ -121,7 +122,8 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * <a href="package-summary.html#Ordering">unordered</a>.  May return
      * itself, either because the stream was already unordered, or because
      * the underlying stream state was modified to be unordered.
-     *
+     * 返回一个【无序流】，如果该流本身就是无序的，则返回他本身。
+     * <p>
      * <p>This is an <a href="package-summary.html#StreamOps">intermediate
      * operation</a>.
      *
@@ -140,7 +142,7 @@ public interface BaseStream<T, S extends BaseStream<T, S>>
      * (unless one of the remaining exceptions is the same exception as the
      * first exception, since an exception cannot suppress itself.)  May
      * return itself.
-     *
+     * <p>
      * <p>This is an <a href="package-summary.html#StreamOps">intermediate
      * operation</a>.
      *

@@ -25,7 +25,7 @@
     - [ ] java.util.jar.*
     - [ ] java.util.logging.*
     - [ ] java.util.zip.*
-    - [ ] java.util.function.*
+    - [x] java.util.function.*
     - [ ] java.util.stream.*
     - [ ] java.util.concurrent.*
     - [ ] java.util.regex.*

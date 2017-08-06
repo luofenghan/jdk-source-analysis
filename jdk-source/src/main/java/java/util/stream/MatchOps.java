@@ -41,20 +41,27 @@ import java.util.function.Supplier;
  */
 final class MatchOps {
 
-    private MatchOps() { }
+    private MatchOps() {
+    }
 
     /**
      * Enum describing quantified match options -- all match, any match, none
      * match.
      */
     enum MatchKind {
-        /** Do all elements match the predicate? */
+        /**
+         * Do all elements match the predicate?
+         */
         ANY(true, true),
 
-        /** Do any elements match the predicate? */
+        /**
+         * Do any elements match the predicate?
+         */
         ALL(false, false),
 
-        /** Do no elements match the predicate? */
+        /**
+         * Do no elements match the predicate?
+         */
         NONE(true, false);
 
         private final boolean stopOnPredicateMatches;
@@ -70,18 +77,19 @@ final class MatchOps {
     /**
      * Constructs a quantified predicate matcher for a Stream.
      *
-     * @param <T> the type of stream elements
+     * @param <T>       the type of stream elements
      * @param predicate the {@code Predicate} to apply to stream elements
      * @param matchKind the kind of quantified match (all, any, none)
      * @return a {@code TerminalOp} implementing the desired quantified match
-     *         criteria
+     * criteria
      */
     public static <T> TerminalOp<T, Boolean> makeRef(Predicate<? super T> predicate,
-            MatchKind matchKind) {
+                                                     MatchKind matchKind) {
         Objects.requireNonNull(predicate);
         Objects.requireNonNull(matchKind);
         class MatchSink extends BooleanTerminalSink<T> {
-            MatchSink() {
+
+            private MatchSink() {
                 super(matchKind);
             }
 
@@ -92,6 +100,7 @@ final class MatchOps {
                     value = matchKind.shortCircuitResult;
                 }
             }
+
         }
 
         return new MatchOp<>(StreamShape.REFERENCE, matchKind, MatchSink::new);
@@ -103,7 +112,7 @@ final class MatchOps {
      * @param predicate the {@code Predicate} to apply to stream elements
      * @param matchKind the kind of quantified match (all, any, none)
      * @return a {@code TerminalOp} implementing the desired quantified match
-     *         criteria
+     * criteria
      */
     public static TerminalOp<Integer, Boolean> makeInt(IntPredicate predicate,
                                                        MatchKind matchKind) {
@@ -132,7 +141,7 @@ final class MatchOps {
      * @param predicate the {@code Predicate} to apply to stream elements
      * @param matchKind the kind of quantified match (all, any, none)
      * @return a {@code TerminalOp} implementing the desired quantified match
-     *         criteria
+     * criteria
      */
     public static TerminalOp<Long, Boolean> makeLong(LongPredicate predicate,
                                                      MatchKind matchKind) {
@@ -162,7 +171,7 @@ final class MatchOps {
      * @param predicate the {@code Predicate} to apply to stream elements
      * @param matchKind the kind of quantified match (all, any, none)
      * @return a {@code TerminalOp} implementing the desired quantified match
-     *         criteria
+     * criteria
      */
     public static TerminalOp<Double, Boolean> makeDouble(DoublePredicate predicate,
                                                          MatchKind matchKind) {
@@ -201,10 +210,10 @@ final class MatchOps {
         /**
          * Constructs a {@code MatchOp}.
          *
-         * @param shape the output shape of the stream pipeline
-         * @param matchKind the kind of quantified match (all, any, none)
+         * @param shape        the output shape of the stream pipeline
+         * @param matchKind    the kind of quantified match (all, any, none)
          * @param sinkSupplier {@code Supplier} for a {@code Sink} of the
-         *        appropriate shape which implements the matching operation
+         *                     appropriate shape which implements the matching operation
          */
         MatchOp(StreamShape shape,
                 MatchKind matchKind,
@@ -271,7 +280,7 @@ final class MatchOps {
      * ForkJoinTask implementation to implement a parallel short-circuiting
      * quantified match
      *
-     * @param <P_IN> the type of source elements for the pipeline
+     * @param <P_IN>  the type of source elements for the pipeline
      * @param <P_OUT> the type of output elements for the pipeline
      */
     @SuppressWarnings("serial")

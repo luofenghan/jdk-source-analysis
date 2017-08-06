@@ -32,18 +32,16 @@ package java.util.stream;
  * specializations of value-handling abstractions such as {@code Spliterator},
  * {@code Consumer}, etc.
  *
- * @apiNote
- * This enum is used by implementations to determine compatibility between
+ * @apiNote This enum is used by implementations to determine compatibility between
  * streams and operations (i.e., if the output shape of a stream is compatible
  * with the input shape of the next operation).
- *
+ * <p>
  * <p>Some APIs require you to specify both a generic type and a stream shape
  * for input or output elements, such as {@link TerminalOp} which has both
  * generic type parameters for its input types, and a getter for the
  * input shape.  When representing primitive streams in this way, the
  * generic type parameter should correspond to the wrapper type for that
  * primitive type.
- *
  * @since 1.8
  */
 enum StreamShape {

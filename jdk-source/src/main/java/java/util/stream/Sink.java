@@ -43,18 +43,18 @@ import java.util.function.LongConsumer;
  * not wish to receive any more data (the {@code cancellationRequested()}
  * method), which a source can poll before sending more data to the
  * {@code Sink}.
- *
+ * <p>
  * <p>A sink may be in one of two states: an initial state and an active state.
  * It starts out in the initial state; the {@code begin()} method transitions
  * it to the active state, and the {@code end()} method transitions it back into
  * the initial state, where it can be re-used.  Data-accepting methods (such as
  * {@code accept()} are only valid in the active state.
  *
- * @apiNote
- * A stream pipeline consists of a source, zero or more intermediate stages
+ * @param <T> type of elements for value streams
+ * @apiNote A stream pipeline consists of a source, zero or more intermediate stages
  * (such as filtering or mapping), and a terminal stage, such as reduction or
  * for-each.  For concreteness, consider the pipeline:
- *
+ * <p>
  * <pre>{@code
  *     int longestStringLengthStartingWithA
  *         = strings.stream()
@@ -62,12 +62,12 @@ import java.util.function.LongConsumer;
  *                  .mapToInt(String::length)
  *                  .max();
  * }</pre>
- *
+ * <p>
  * <p>Here, we have three stages, filtering, mapping, and reducing.  The
  * filtering stage consumes strings and emits a subset of those strings; the
  * mapping stage consumes strings and emits ints; the reduction stage consumes
  * those ints and computes the maximal value.
- *
+ * <p>
  * <p>A {@code Sink} instance is used to represent each stage of this pipeline,
  * whether the stage accepts objects, ints, longs, or doubles.  Sink has entry
  * points for {@code accept(Object)}, {@code accept(int)}, etc, so that we do
@@ -81,13 +81,13 @@ import java.util.function.LongConsumer;
  * the correct {@code accept} method on its downstream {@code Sink}.  Similarly,
  * each stage must implement the correct {@code accept} method corresponding to
  * the data type it accepts.
- *
+ * <p>
  * <p>The specialized subtypes such as {@link Sink.OfInt} override
  * {@code accept(Object)} to call the appropriate primitive specialization of
  * {@code accept}, implement the appropriate primitive specialization of
  * {@code Consumer}, and re-abstract the appropriate primitive specialization of
  * {@code accept}.
- *
+ * <p>
  * <p>The chaining subtypes such as {@link ChainedInt} not only implement
  * {@code Sink.OfInt}, but also maintain a {@code downstream} field which
  * represents the downstream {@code Sink}, and implement the methods
@@ -95,7 +95,7 @@ import java.util.function.LongConsumer;
  * delegate to the downstream {@code Sink}.  Most implementations of
  * intermediate operations will use these chaining wrappers.  For example, the
  * mapping stage in the above example would look like:
- *
+ * <p>
  * <pre>{@code
  *     IntSink is = new Sink.ChainedReference<U>(sink) {
  *         public void accept(U u) {
@@ -103,15 +103,13 @@ import java.util.function.LongConsumer;
  *         }
  *     };
  * }</pre>
- *
+ * <p>
  * <p>Here, we implement {@code Sink.ChainedReference<U>}, meaning that we expect
  * to receive elements of type {@code U} as input, and pass the downstream sink
  * to the constructor.  Because the next stage expects to receive integers, we
  * must call the {@code accept(int)} method when emitting values to the downstream.
  * The {@code accept()} method applies the mapping function from {@code U} to
  * {@code int} and passes the resulting value to the downstream {@code Sink}.
- *
- * @param <T> type of elements for value streams
  * @since 1.8
  */
 interface Sink<T> extends Consumer<T> {
@@ -119,30 +117,32 @@ interface Sink<T> extends Consumer<T> {
      * Resets the sink state to receive a fresh data set.  This must be called
      * before sending any data to the sink.  After calling {@link #end()},
      * you may call this method to reset the sink for another calculation.
-     * @param size The exact size of the data to be pushed downstream, if
-     * known or {@code -1} if unknown or infinite.
      *
-     * <p>Prior to this call, the sink must be in the initial state, and after
-     * this call it is in the active state.
+     * @param size The exact size of the data to be pushed downstream, if
+     *             known or {@code -1} if unknown or infinite.
+     *             <p>
+     *             <p>Prior to this call, the sink must be in the initial state, and after
+     *             this call it is in the active state.
      */
-    default void begin(long size) {}
+    default void begin(long size) {
+    }
 
     /**
      * Indicates that all elements have been pushed.  If the {@code Sink} is
      * stateful, it should send any stored state downstream at this time, and
      * should clear any accumulated state (and associated resources).
-     *
+     * <p>
      * <p>Prior to this call, the sink must be in the active state, and after
      * this call it is returned to the initial state.
      */
-    default void end() {}
+    default void end() {
+    }
 
     /**
      * Indicates that this {@code Sink} does not wish to receive any more data.
      *
-     * @implSpec The default implementation always returns false.
-     *
      * @return true if cancellation is requested
+     * @implSpec The default implementation always returns false.
      */
     default boolean cancellationRequested() {
         return false;
@@ -151,9 +151,8 @@ interface Sink<T> extends Consumer<T> {
     /**
      * Accepts an int value.
      *
-     * @implSpec The default implementation throws IllegalStateException.
-     *
      * @throws IllegalStateException if this sink does not accept int values
+     * @implSpec The default implementation throws IllegalStateException.
      */
     default void accept(int value) {
         throw new IllegalStateException("called wrong accept method");
@@ -162,9 +161,8 @@ interface Sink<T> extends Consumer<T> {
     /**
      * Accepts a long value.
      *
-     * @implSpec The default implementation throws IllegalStateException.
-     *
      * @throws IllegalStateException if this sink does not accept long values
+     * @implSpec The default implementation throws IllegalStateException.
      */
     default void accept(long value) {
         throw new IllegalStateException("called wrong accept method");
@@ -173,9 +171,8 @@ interface Sink<T> extends Consumer<T> {
     /**
      * Accepts a double value.
      *
-     * @implSpec The default implementation throws IllegalStateException.
-     *
      * @throws IllegalStateException if this sink does not accept double values
+     * @implSpec The default implementation throws IllegalStateException.
      */
     default void accept(double value) {
         throw new IllegalStateException("called wrong accept method");
@@ -241,7 +238,7 @@ interface Sink<T> extends Consumer<T> {
      * implementation of the {@code accept()} method must call the correct
      * {@code accept()} method on the downstream {@code Sink}.
      */
-    static abstract class ChainedReference<T, E_OUT> implements Sink<T> {
+    abstract class ChainedReference<T, E_OUT> implements Sink<T> {
         protected final Sink<? super E_OUT> downstream;
 
         public ChainedReference(Sink<? super E_OUT> downstream) {
@@ -273,7 +270,7 @@ interface Sink<T> extends Consumer<T> {
      * The implementation of the {@code accept()} method must call the correct
      * {@code accept()} method on the downstream {@code Sink}.
      */
-    static abstract class ChainedInt<E_OUT> implements Sink.OfInt {
+    abstract class ChainedInt<E_OUT> implements Sink.OfInt {
         protected final Sink<? super E_OUT> downstream;
 
         public ChainedInt(Sink<? super E_OUT> downstream) {
@@ -305,7 +302,7 @@ interface Sink<T> extends Consumer<T> {
      * The implementation of the {@code accept()} method must call the correct
      * {@code accept()} method on the downstream {@code Sink}.
      */
-    static abstract class ChainedLong<E_OUT> implements Sink.OfLong {
+    abstract class ChainedLong<E_OUT> implements Sink.OfLong {
         protected final Sink<? super E_OUT> downstream;
 
         public ChainedLong(Sink<? super E_OUT> downstream) {

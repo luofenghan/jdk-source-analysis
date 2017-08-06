@@ -31,7 +31,7 @@ import java.util.Objects;
  * returns no result.  This is the primitive type specialization of
  * {@link Consumer} for {@code double}.  Unlike most other functional interfaces,
  * {@code DoubleConsumer} is expected to operate via side-effects.
- *
+ * <p>
  * <p>This is a <a href="package-summary.html">functional interface</a>
  * whose functional method is {@link #accept(double)}.
  *
@@ -62,6 +62,9 @@ public interface DoubleConsumer {
      */
     default DoubleConsumer andThen(DoubleConsumer after) {
         Objects.requireNonNull(after);
-        return (double t) -> { accept(t); after.accept(t); };
+        return (double t) -> {
+            accept(t);
+            after.accept(t);
+        };
     }
 }
